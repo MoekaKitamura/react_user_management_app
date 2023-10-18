@@ -2,7 +2,7 @@ export type User = {
   id: number;
   name: string;
   username: string;
-  email: VTTCue;
+  email: string;
   address: {
     street: string;
     suite: string;

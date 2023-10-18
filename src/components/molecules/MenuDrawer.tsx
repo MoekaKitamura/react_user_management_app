@@ -24,6 +24,7 @@ export const MenuDrawer: FC<Props> = memo((props) => {
     onClickUserManagement,
     onClickSetting,
   } = props;
+
   return (
     <Drawer placement="left" size="xs" isOpen={isOpen} onClose={onClose}>
       <DrawerOverlay />
