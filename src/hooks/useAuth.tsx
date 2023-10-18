@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { User } from "../types/api/User";
+import { useMessage } from "./useMessage";
 
 export const useAuth = () => {
   const navigate = useNavigate();
+  const { showMessage } = useMessage();
   const [loading, setLoading] = useState(false);
 
   const login = useCallback((id: string) => {
@@ -16,12 +18,13 @@ export const useAuth = () => {
       .then((res) => {
         if (res.data) {
           navigate("/home");
+          showMessage({ title: "ログインしました", status: "success" });
         } else {
-          alert("ユーザーが見つかりません");
+          showMessage({ title: "ユーザーが見つかりません", status: "error" });
         }
       })
       .catch(() => {
-        alert("ログインできません");
+        showMessage({ title: "ログインできません", status: "error" });
       })
       .finally(() => {
         setLoading(false);
