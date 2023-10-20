@@ -1,8 +1,17 @@
 import { memo, FC, useCallback } from "react";
-import { Box, Flex, Heading, Link, useDisclosure } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import {
+  Box,
+  Flex,
+  Heading,
+  Link,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
+
 import { MenuIconButton } from "../../atoms/button/MenuIconButton";
 import { MenuDrawer } from "../../molecules/MenuDrawer";
-import { useNavigate } from "react-router-dom";
+import { useLoginUser } from "../../../hooks/useLoginUser";
 
 export const Header: FC = memo(() => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -15,6 +24,7 @@ export const Header: FC = memo(() => {
     []
   );
   const onClickSetting = useCallback(() => navigate("/home/setting"), []);
+  const { loginUser } = useLoginUser();
 
   return (
     <>
@@ -44,12 +54,17 @@ export const Header: FC = memo(() => {
           display={{ base: "none", md: "flex" }}
         >
           <Box pr={4}>
-            <Link onClick={onClickHome}>ユーザー一覧</Link>
-            <Link onClick={onClickSetting} ml={2}>
+            <Link onClick={onClickUserManagement}>ユーザー一覧</Link>
+            <Link onClick={onClickSetting} ml={3}>
               設定
             </Link>
           </Box>
         </Flex>
+        <Text display={{ base: "none", md: "block" }}>
+          {loginUser
+            ? `${loginUser.name}としてログイン中`
+            : "ログインしてください"}
+        </Text>
         <MenuIconButton onOpen={onOpen} />
       </Flex>
       <MenuDrawer
