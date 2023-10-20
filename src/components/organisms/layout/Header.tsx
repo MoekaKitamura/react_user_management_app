@@ -12,6 +12,7 @@ import {
 import { MenuIconButton } from "../../atoms/button/MenuIconButton";
 import { MenuDrawer } from "../../molecules/MenuDrawer";
 import { useLoginUser } from "../../../hooks/useLoginUser";
+import { StarIcon } from "@chakra-ui/icons";
 
 export const Header: FC = memo(() => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -60,11 +61,14 @@ export const Header: FC = memo(() => {
             </Link>
           </Box>
         </Flex>
-        <Text display={{ base: "none", md: "block" }}>
-          {loginUser
-            ? `${loginUser.name}としてログイン中`
-            : "ログインしてください"}
-        </Text>
+        <Flex alignItems="center" display={{ base: "none", md: "flex" }}>
+          {loginUser?.isAdmin ? <StarIcon mr={1} /> : ""}
+          <Text fontSize="14px">
+            {loginUser
+              ? `${loginUser.name}としてログイン中`
+              : "ログインしてください"}
+          </Text>
+        </Flex>
         <MenuIconButton onOpen={onOpen} />
       </Flex>
       <MenuDrawer
